@@ -31,7 +31,7 @@ loadCSS('https://shefaligoyal17.github.io/poll-script/poll-style.css'); // Repla
 
 window.PollNamespace.GetPollBanner  = window.PollNamespace || {};
 
-window.GetPollBanner = (id, targetSelector = '#my-custom-container') => {
+window.PollNamespace.GetPollBanner = (id, targetSelector = '#my-custom-container') => {
   const fetchApi = async (id) => {
     try {
       const res = await fetch(`https://post-summary.yukta.one/get_poll/${id}`);
