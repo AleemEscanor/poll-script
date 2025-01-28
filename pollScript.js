@@ -445,7 +445,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
       otherOptions.forEach((otherOption) => {
         otherOption.style.backgroundColor = 'white';
       });
-      const div = document.querySelector(`#option-${quiz.options.indexOf(selectedOption)}-${bannerId}`);
+      const div = document.querySelector(`#option-${quiz.options.indexOf(selectedOption)}-${bannerId}-${targetSelector}`);
       div.style.backgroundColor = '#e8e8e8';
       div.style.color = 'black';
       div.style.borderColor =  'transparent'
@@ -455,14 +455,14 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
       // Create the banner container
       const quizContainerWidgets = document.createElement('div');
       quizContainerWidgets.classList.add('quiz-container-widgets');
-      quizContainerWidgets.id = `banner-${bannerId}`;
+      quizContainerWidgets.id = `banner-${bannerId}-${targetSelector}`;
 
       const quizContentWrapper = document.createElement('div');
       quizContentWrapper.classList.add('quiz-content-wrapper');
 
       const quizWidgetWrapperContent = document.createElement('div');
       quizWidgetWrapperContent.classList.add('quiz-widget-wrapper-content');
-      quizWidgetWrapperContent.id = `data-quiz-id-${bannerId}`
+      quizWidgetWrapperContent.id = `data-quiz-id-${bannerId}-${targetSelector}`
 
       const quizBox = document.createElement('div');
       quizBox.classList.add('quiz-box');
@@ -480,7 +480,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
       quiz.options.forEach((option, index) => {
         //Parent div
         const div = document.createElement('div');
-        div.id = `option-${index}-${bannerId}`;
+        div.id = `option-${index}-${bannerId}-${targetSelector}`;
         div.value = option
         div.textContent = option        
         div.classList.add('quiz-option');
@@ -504,7 +504,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
           //change style of selected option to green if correct else red and green the correct one
           const correctOption = quiz.answer
-          const selectedOptionElement = document.getElementById(`option-${quiz.options.indexOf(selectedOption)}-${bannerId}`);
+          const selectedOptionElement = document.getElementById(`option-${quiz.options.indexOf(selectedOption)}-${bannerId}-${targetSelector}`);
 
           if (correctOption === selectedOption) {
             selectedOptionElement.style.backgroundColor = '#9feb8e';
@@ -515,7 +515,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
             selectedOptionElement.style.backgroundColor ='#fca7a1';
             selectedOptionElement.style.color = '#000000';
             selectedOptionElement.innerHTML = `${selectedOption}<span class="list-icon1"><img src="https://raw.githubusercontent.com/shefaligoyal17/quiz-script/bf354b81846122f19438cb627b1af0bd44e37414/assets/img/cross.svg" alt="tick" /></span>`
-            const correctOptionElement = document.getElementById(`option-${quiz.options.indexOf(correctOption)}-${bannerId}`);
+            const correctOptionElement = document.getElementById(`option-${quiz.options.indexOf(correctOption)}-${bannerId}-${targetSelector}`);
             correctOptionElement.style.backgroundColor = '#9feb8e';
             correctOptionElement.style.color = '#000000';
             correctOptionElement.style.borderColor = 'transparent';
@@ -670,7 +670,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       // Create the banner container
       const summaryContentWrapper = document.createElement('div');
       summaryContentWrapper.classList.add('summary-content-wrapper');
-      summaryContentWrapper.id = `banner-${bannerId}`;
+      summaryContentWrapper.id = `banner-${bannerId}-${targetSelector}`;
 
       const pluginData = document.createElement('div');
       pluginData.classList.add('plugin-data');
@@ -687,36 +687,36 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       const radioContainer = document.createElement('div');
       radioContainer.classList.add('summary-controls')
 
-      const radioName = `summaryType-${bannerId}`;
+      const radioName = `summaryType-${bannerId}-${targetSelector}`;
 
       const radioLong = document.createElement('input');
       radioLong.type = 'radio';
-      radioLong.id = `long-${bannerId}`;
+      radioLong.id = `long-${bannerId}-${targetSelector}`;
       radioLong.name = radioName;
 
       const radioMedium = document.createElement('input');
       radioMedium.type = 'radio';
-      radioMedium.id = `medium-${bannerId}`;
+      radioMedium.id = `medium-${bannerId}-${targetSelector}`;
       radioMedium.name = radioName;
 
       const radioShort = document.createElement('input');
       radioShort.type = 'radio';
-      radioShort.id = `short-${bannerId}`;
+      radioShort.id = `short-${bannerId}-${targetSelector}`;
       radioShort.name = radioName;
       radioShort.checked = true;
 
       const labelLong = document.createElement('label');
-      labelLong.setAttribute('for', `long-${bannerId}`);
+      labelLong.setAttribute('for', `long-${bannerId}-${targetSelector}`);
       labelLong.textContent = 'Long';
       labelLong.appendChild(radioLong)
 
       const labelMedium = document.createElement('label');
-      labelMedium.setAttribute('for', `medium-${bannerId}`);
+      labelMedium.setAttribute('for', `medium-${bannerId}-${targetSelector}`);
       labelMedium.textContent = 'Medium';
       labelMedium.appendChild(radioMedium)
 
       const labelShort = document.createElement('label');
-      labelShort.setAttribute('for', `short-${bannerId}`);
+      labelShort.setAttribute('for', `short-${bannerId}-${targetSelector}`);
       labelShort.textContent = 'Short';
       labelShort.appendChild(radioShort)
 
