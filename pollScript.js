@@ -26,7 +26,7 @@ const loadGoogleFont = () => {
 
 // Load the CSS file
 loadGoogleFont()
-loadCSS('poll-style.css'); // Replace with your hosted CSS file URL
+loadCSS('https://shefaligoyal17.github.io/poll-script/poll-style.css'); // Replace with your hosted CSS file URL
 
 window.GetPollBanner = (id, targetSelector = '#my-custom-container') => {
   const fetchApi = async (id) => {
@@ -140,7 +140,7 @@ window.GetPollBanner = (id, targetSelector = '#my-custom-container') => {
 
       const headingIcon = document.createElement('div')
       headingIcon.classList.add('section-heading-icon')
-      headingIcon.innerHTML = '<img alt="#" data-src="assets/img/Untitled-1.gif" class=" lazyloaded" src="assets/img/Untitled-1.gif">'
+      headingIcon.innerHTML = '<img alt="#" data-src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif">'
 
       headingContent.appendChild(headingText)
       headingContent.appendChild(headingIcon)
