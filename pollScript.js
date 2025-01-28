@@ -624,53 +624,54 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       console.error('Error fetching ad data:', error);
       return null;
     }
-  }
+  };
 
   const RenderSummaryBanner = async (bannerId, targetSelector = '#my-custom-container') => {
     const summary = await fetchApi(bannerId);
-    const adHtml = await fetchAdApi('summary')
+    const adHtml = await fetchAdApi('summary');
 
     const renderSummaryHeading = () => {
-      const headingContainer = document.createElement('div')
-      headingContainer.classList.add('heading-container')
+      const headingContainer = document.createElement('div');
+      headingContainer.classList.add('heading-container');
 
-      const headingBG = document.createElement('div')
-      headingBG.classList.add('heading-container-bg')
+      const headingBG = document.createElement('div');
+      headingBG.classList.add('heading-container-bg');
 
       const pluginName = document.createElement('div');
       pluginName.classList.add('plugin-name');
       pluginName.textContent = 'YM Summary';
 
-      const headingContent = document.createElement('div')
-      headingContent.classList.add('heading-content')
+      const headingContent = document.createElement('div');
+      headingContent.classList.add('heading-content');
 
-      const headingText = document.createElement('div')
-      headingContent.classList.add('heading-text')
-      headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><a href="https://eplus.yukta.one">View T&amp;C</a>'
+      const headingText = document.createElement('div');
+      headingContent.classList.add('heading-text');
+      headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><a href="https://eplus.yukta.one">View T&amp;C</a>';
 
-      const headingIcon = document.createElement('div')
-      headingContent.classList.add('heading-icon')
-      headingIcon.innerHTML = '<img alt="#" data-src="https://eplus.yukta.one/wp-content/plugins/summary-quiz-ad/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://eplus.yukta.one/wp-content/plugins/summary-quiz-ad/assets/img/Untitled-1.gif">'
+      const headingIcon = document.createElement('div');
+      headingContent.classList.add('heading-icon');
+      headingIcon.innerHTML =
+        '<img alt="#" data-src="https://eplus.yukta.one/wp-content/plugins/summary-quiz-ad/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://eplus.yukta.one/wp-content/plugins/summary-quiz-ad/assets/img/Untitled-1.gif">';
 
-      headingContent.appendChild(headingText)
-      headingContent.appendChild(headingIcon)
+      headingContent.appendChild(headingText);
+      headingContent.appendChild(headingIcon);
 
       headingContainer.appendChild(headingBG);
       headingContainer.appendChild(pluginName);
       headingContainer.appendChild(headingContent);
 
       return headingContainer;
-    }
+    };
 
     if (summary && adHtml) {
-      //The parentContainer
+      // The parent container
       const summaryContainer = document.createElement('div');
-      summaryContainer.classList.add('summary-container');      
+      summaryContainer.classList.add('summary-container');
 
       // Create the banner container
       const summaryContentWrapper = document.createElement('div');
       summaryContentWrapper.classList.add('summary-content-wrapper');
-      summaryContentWrapper.id = `banner-${bannerId}-${targetSelector}`;
+      summaryContentWrapper.id = `banner-${bannerId}-${targetSelector.replace('#', '')}`;
 
       const pluginData = document.createElement('div');
       pluginData.classList.add('plugin-data');
@@ -678,47 +679,47 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       const summaryContentBlock = document.createElement('div');
       summaryContentBlock.classList.add('summary-content-block');
 
-      //for ad
+      // For ad
       const AdContent = document.createElement('div');
       AdContent.classList.add('ad-content');
       AdContent.innerHTML = adHtml;
 
       // Radio buttons
       const radioContainer = document.createElement('div');
-      radioContainer.classList.add('summary-controls')
+      radioContainer.classList.add('summary-controls');
 
-      const radioName = `summaryType-${bannerId}-${targetSelector}`;
+      const radioName = `summaryType-${bannerId}-${targetSelector.replace('#', '')}`;
 
       const radioLong = document.createElement('input');
       radioLong.type = 'radio';
-      radioLong.id = `long-${bannerId}-${targetSelector}`;
+      radioLong.id = `long-${bannerId}-${targetSelector.replace('#', '')}`;
       radioLong.name = radioName;
 
       const radioMedium = document.createElement('input');
       radioMedium.type = 'radio';
-      radioMedium.id = `medium-${bannerId}-${targetSelector}`;
+      radioMedium.id = `medium-${bannerId}-${targetSelector.replace('#', '')}`;
       radioMedium.name = radioName;
 
       const radioShort = document.createElement('input');
       radioShort.type = 'radio';
-      radioShort.id = `short-${bannerId}-${targetSelector}`;
+      radioShort.id = `short-${bannerId}-${targetSelector.replace('#', '')}`;
       radioShort.name = radioName;
       radioShort.checked = true;
 
       const labelLong = document.createElement('label');
-      labelLong.setAttribute('for', `long-${bannerId}-${targetSelector}`);
+      labelLong.setAttribute('for', `long-${bannerId}-${targetSelector.replace('#', '')}`);
       labelLong.textContent = 'Long';
-      labelLong.appendChild(radioLong)
+      labelLong.appendChild(radioLong);
 
       const labelMedium = document.createElement('label');
-      labelMedium.setAttribute('for', `medium-${bannerId}-${targetSelector}`);
+      labelMedium.setAttribute('for', `medium-${bannerId}-${targetSelector.replace('#', '')}`);
       labelMedium.textContent = 'Medium';
-      labelMedium.appendChild(radioMedium)
+      labelMedium.appendChild(radioMedium);
 
       const labelShort = document.createElement('label');
-      labelShort.setAttribute('for', `short-${bannerId}-${targetSelector}`);
+      labelShort.setAttribute('for', `short-${bannerId}-${targetSelector.replace('#', '')}`);
       labelShort.textContent = 'Short';
-      labelShort.appendChild(radioShort)
+      labelShort.appendChild(radioShort);
 
       radioContainer.appendChild(labelShort);
       radioContainer.appendChild(labelMedium);
@@ -731,12 +732,12 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       summaryContentBlock.appendChild(radioContainer);
       summaryContentBlock.appendChild(contentDiv);
 
-      pluginData.appendChild(summaryContentBlock)
+      pluginData.appendChild(summaryContentBlock);
       pluginData.appendChild(AdContent);
 
       summaryContentWrapper.appendChild(pluginData);
-      
-      const headingContainer = renderSummaryHeading()
+
+      const headingContainer = renderSummaryHeading();
       summaryContainer.appendChild(headingContainer);
       summaryContainer.appendChild(summaryContentWrapper);
 
