@@ -28,6 +28,9 @@ const loadGoogleFont = () => {
 loadGoogleFont()
 loadCSS('https://shefaligoyal17.github.io/poll-script/poll-style.css'); // Replace with your hosted CSS file URL
 
+
+window.PollNamespace.GetPollBanner  = window.PollNamespace || {};
+
 window.GetPollBanner = (id, targetSelector = '#my-custom-container') => {
   const fetchApi = async (id) => {
     try {
