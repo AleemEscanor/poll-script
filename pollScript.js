@@ -433,6 +433,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
   const RenderQuizBanner = async (bannerId, targetSelector) => {
     const quiz = await fetchApi(bannerId);
+    const TargetId = targetSelector.replace('#', '');
     let selectedOption;
 
     // Define the event listener function
@@ -440,12 +441,14 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
       event.preventDefault();
       selectedOption = event.target.value;
       // Change the background color of other options
-      const optionContainer = document.querySelector('#quiz-option-container');
+      const optionContainer = document.querySelector(`#quiz-option-container-${bannerId}-${TargetId}`);
       const otherOptions = optionContainer.querySelectorAll('.quiz-option');
       otherOptions.forEach((otherOption) => {
         otherOption.style.backgroundColor = 'white';
+        otherOption.style.borderColor =  'black'
+        otherOption.style.color = 'black';
       });
-      const div = document.querySelector(`#option-${quiz.options.indexOf(selectedOption)}-${bannerId}-${targetSelector}`);
+      const div = document.querySelector(`#option-${quiz.options.indexOf(selectedOption)}-${bannerId}-${TargetId}`);
       div.style.backgroundColor = '#e8e8e8';
       div.style.color = 'black';
       div.style.borderColor =  'transparent'
@@ -455,14 +458,14 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
       // Create the banner container
       const quizContainerWidgets = document.createElement('div');
       quizContainerWidgets.classList.add('quiz-container-widgets');
-      quizContainerWidgets.id = `banner-${bannerId}-${targetSelector}`;
+      quizContainerWidgets.id = `banner-${bannerId}-${TargetId}`;
 
       const quizContentWrapper = document.createElement('div');
       quizContentWrapper.classList.add('quiz-content-wrapper');
 
       const quizWidgetWrapperContent = document.createElement('div');
       quizWidgetWrapperContent.classList.add('quiz-widget-wrapper-content');
-      quizWidgetWrapperContent.id = `data-quiz-id-${bannerId}-${targetSelector}`
+      quizWidgetWrapperContent.id = `data-quiz-id-${bannerId}-${TargetId}`
 
       const quizBox = document.createElement('div');
       quizBox.classList.add('quiz-box');
@@ -474,13 +477,13 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
       // Button Container
       const optionContainer = document.createElement('div');
-      optionContainer.id = 'quiz-option-container';
+      optionContainer.id = `quiz-option-container-${bannerId}-${TargetId}`;
 
       // Quiz Options
       quiz.options.forEach((option, index) => {
         //Parent div
         const div = document.createElement('div');
-        div.id = `option-${index}-${bannerId}-${targetSelector}`;
+        div.id = `option-${index}-${bannerId}-${TargetId}`;
         div.value = option
         div.textContent = option        
         div.classList.add('quiz-option');
@@ -504,7 +507,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
           //change style of selected option to green if correct else red and green the correct one
           const correctOption = quiz.answer
-          const selectedOptionElement = document.getElementById(`option-${quiz.options.indexOf(selectedOption)}-${bannerId}-${targetSelector}`);
+          const selectedOptionElement = document.getElementById(`option-${quiz.options.indexOf(selectedOption)}-${bannerId}-${TargetId}`);
 
           if (correctOption === selectedOption) {
             selectedOptionElement.style.backgroundColor = '#9feb8e';
@@ -515,7 +518,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
             selectedOptionElement.style.backgroundColor ='#fca7a1';
             selectedOptionElement.style.color = '#000000';
             selectedOptionElement.innerHTML = `${selectedOption}<span class="list-icon1"><img src="https://raw.githubusercontent.com/shefaligoyal17/quiz-script/bf354b81846122f19438cb627b1af0bd44e37414/assets/img/cross.svg" alt="tick" /></span>`
-            const correctOptionElement = document.getElementById(`option-${quiz.options.indexOf(correctOption)}-${bannerId}-${targetSelector}`);
+            const correctOptionElement = document.getElementById(`option-${quiz.options.indexOf(correctOption)}-${bannerId}-${TargetId}`);
             correctOptionElement.style.backgroundColor = '#9feb8e';
             correctOptionElement.style.color = '#000000';
             correctOptionElement.style.borderColor = 'transparent';
@@ -564,7 +567,6 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
   RenderQuizBanner(id, targetSelector);
 };
 
-
 // Function to dynamically load a CSS file
 const loadSummaryCSS = (cssUrl) => {
   const link = document.createElement('link');
@@ -593,7 +595,7 @@ const loadSummaryGoogleFont = () => {
 
 // Load the CSS file
 loadSummaryGoogleFont()
-loadSummaryCSS('https://aleemescanor.github.io/summaryPlugin/summary-style.css'); // Replace with your hosted CSS file URL
+loadSummaryCSS('https://shefaligoyal17.github.io/poll-script/summary-style.css'); // Replace with your hosted CSS file URL
 
 window.SummaryNamespace = window.SummaryNamespace || {};
 
@@ -631,37 +633,42 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
     const adHtml = await fetchAdApi('summary');
 
     const renderSummaryHeading = () => {
-      const headingContainer = document.createElement('div');
-      headingContainer.classList.add('heading-container');
+      const headingContainer = document.createElement('div')
+      headingContainer.classList.add('plugin-heading-text')
 
-      const headingBG = document.createElement('div');
-      headingBG.classList.add('heading-container-bg');
+      const headingBG = document.createElement('div')
+      headingBG.classList.add('pull-heading-bg')  //pull is not a typo, I am trying to match the class names as per the css
 
       const pluginName = document.createElement('div');
-      pluginName.classList.add('plugin-name');
-      pluginName.textContent = 'YM Summary';
+      pluginName.classList.add('pull-plugin-name');
 
-      const headingContent = document.createElement('div');
-      headingContent.classList.add('heading-content');
+      const titleAnimation = document.createElement('div');
+      titleAnimation.classList.add('title-animation');
+      const text = document.createElement('h2');
+      text.textContent = 'YM Poll';
+      pluginName.appendChild(titleAnimation);
+      pluginName.appendChild(text);
 
-      const headingText = document.createElement('div');
-      headingContent.classList.add('heading-text');
-      headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><a href="https://eplus.yukta.one">View T&amp;C</a>';
+      const headingContent = document.createElement('div')
+      headingContent.classList.add('section-heading')
 
-      const headingIcon = document.createElement('div');
-      headingContent.classList.add('heading-icon');
-      headingIcon.innerHTML =
-        '<img alt="#" data-src="https://eplus.yukta.one/wp-content/plugins/summary-quiz-ad/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://eplus.yukta.one/wp-content/plugins/summary-quiz-ad/assets/img/Untitled-1.gif">';
+      const headingText = document.createElement('div')
+      headingText.classList.add('pull-section-heading-text')
+      headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><div class="sub-heading"><a href="">View T&amp;C</a></div>'
 
-      headingContent.appendChild(headingText);
-      headingContent.appendChild(headingIcon);
+      const headingIcon = document.createElement('div')
+      headingIcon.classList.add('section-heading-icon')
+      headingIcon.innerHTML = '<img alt="#" data-src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif">'
+
+      headingContent.appendChild(headingText)
+      headingContent.appendChild(headingIcon)
 
       headingContainer.appendChild(headingBG);
       headingContainer.appendChild(pluginName);
       headingContainer.appendChild(headingContent);
 
       return headingContainer;
-    };
+    }
 
     if (summary && adHtml) {
       // The parent container
