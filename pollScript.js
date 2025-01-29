@@ -567,7 +567,6 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
   RenderQuizBanner(id, targetSelector);
 };
 
-
 // Function to dynamically load a CSS file
 const loadSummaryCSS = (cssUrl) => {
   const link = document.createElement('link');
@@ -596,7 +595,7 @@ const loadSummaryGoogleFont = () => {
 
 // Load the CSS file
 loadSummaryGoogleFont()
-loadSummaryCSS('https://aleemescanor.github.io/summaryPlugin/summary-style.css'); // Replace with your hosted CSS file URL
+loadSummaryCSS('https://shefaligoyal17.github.io/poll-script/summary-style.css'); // Replace with your hosted CSS file URL
 
 window.SummaryNamespace = window.SummaryNamespace || {};
 
@@ -634,37 +633,42 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
     const adHtml = await fetchAdApi('summary');
 
     const renderSummaryHeading = () => {
-      const headingContainer = document.createElement('div');
-      headingContainer.classList.add('heading-container');
+      const headingContainer = document.createElement('div')
+      headingContainer.classList.add('plugin-heading-text')
 
-      const headingBG = document.createElement('div');
-      headingBG.classList.add('heading-container-bg');
+      const headingBG = document.createElement('div')
+      headingBG.classList.add('pull-heading-bg')  //pull is not a typo, I am trying to match the class names as per the css
 
       const pluginName = document.createElement('div');
-      pluginName.classList.add('plugin-name');
-      pluginName.textContent = 'YM Summary';
+      pluginName.classList.add('pull-plugin-name');
 
-      const headingContent = document.createElement('div');
-      headingContent.classList.add('heading-content');
+      const titleAnimation = document.createElement('div');
+      titleAnimation.classList.add('title-animation');
+      const text = document.createElement('h2');
+      text.textContent = 'YM Poll';
+      pluginName.appendChild(titleAnimation);
+      pluginName.appendChild(text);
 
-      const headingText = document.createElement('div');
-      headingContent.classList.add('heading-text');
-      headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><a href="https://eplus.yukta.one">View T&amp;C</a>';
+      const headingContent = document.createElement('div')
+      headingContent.classList.add('section-heading')
 
-      const headingIcon = document.createElement('div');
-      headingContent.classList.add('heading-icon');
-      headingIcon.innerHTML =
-        '<img alt="#" data-src="https://eplus.yukta.one/wp-content/plugins/summary-quiz-ad/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://eplus.yukta.one/wp-content/plugins/summary-quiz-ad/assets/img/Untitled-1.gif">';
+      const headingText = document.createElement('div')
+      headingText.classList.add('pull-section-heading-text')
+      headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><div class="sub-heading"><a href="">View T&amp;C</a></div>'
 
-      headingContent.appendChild(headingText);
-      headingContent.appendChild(headingIcon);
+      const headingIcon = document.createElement('div')
+      headingIcon.classList.add('section-heading-icon')
+      headingIcon.innerHTML = '<img alt="#" data-src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif">'
+
+      headingContent.appendChild(headingText)
+      headingContent.appendChild(headingIcon)
 
       headingContainer.appendChild(headingBG);
       headingContainer.appendChild(pluginName);
       headingContainer.appendChild(headingContent);
 
       return headingContainer;
-    };
+    }
 
     if (summary && adHtml) {
       // The parent container
