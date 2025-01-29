@@ -26,7 +26,7 @@ const loadSummaryCSS = (cssUrl) => {
   
   // Load the CSS file
   loadSummaryGoogleFont()
-  loadSummaryCSS('https://shefaligoyal17.github.io/poll-script/summary-style.css'); // Replace with your hosted CSS file URL
+  loadSummaryCSS('https://aleemescanor.github.io/poll-script/summary-style.css'); // Replace with your hosted CSS file URL
   
   window.SummaryNamespace = window.SummaryNamespace || {};
   
