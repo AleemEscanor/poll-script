@@ -645,7 +645,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       const titleAnimation = document.createElement('div');
       titleAnimation.classList.add('title-animation');
       const text = document.createElement('h2');
-      text.textContent = 'YM Poll';
+      text.textContent = 'YM Summary';
       pluginName.appendChild(titleAnimation);
       pluginName.appendChild(text);
 
