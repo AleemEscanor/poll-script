@@ -166,7 +166,7 @@ window.PollNamespace = window.PollNamespace || {};
         headingContainer.appendChild(pluginName);
         headingContainer.appendChild(headingContent);
 
-        if (data?.header_visibity) {
+        if (data?.header_visibity === 'True') {
           return headingContainer;
         }
         else {
@@ -463,7 +463,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
     headingContainer.appendChild(pluginName);
     headingContainer.appendChild(headingContent);
 
-    if (data?.header_visibity) {
+    if (data?.header_visibity === 'True') {
       return headingContainer;
     }
     else {
@@ -750,7 +750,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       headingContainer.appendChild(pluginName);
       headingContainer.appendChild(headingContent);
 
-      if (data?.header_visibity) {
+      if (data?.header_visibity === 'True') {
         return headingContainer;
       }
       else {
