@@ -27,6 +27,7 @@ const loadGoogleFont = () => {
 // Load the CSS file
 loadGoogleFont()
 loadCSS('https://aleemescanor.github.io/poll-script/poll-style.css'); // Replace with your hosted CSS file URL
+// loadCSS('poll-style.css'); // Replace with your hosted CSS file URL
 
 
 window.PollNamespace = window.PollNamespace || {};
@@ -60,6 +61,18 @@ window.PollNamespace = window.PollNamespace || {};
       }
     }
 
+    const setAdAlignment = (align) => {
+      if (align === 'left') {
+        return "row-reverse"
+      }
+      else if (align === 'top') {
+        return 'column-reverse'
+      }
+      else if (align === 'bottom') {
+        return 'column'
+      }
+    }
+
     const PostUserResponse = async (pollId, ques, userAnswer) => {
       try {
         if (!pollId || !ques || !userAnswer) {
@@ -84,9 +97,10 @@ window.PollNamespace = window.PollNamespace || {};
       }
     }
 
-    const renderAdContent = async () => {
+    const renderAdContent = async (poll) => {
       const adContainer = document.createElement('div');
       adContainer.classList.add('ad-container');
+      adContainer.style.display = poll?.ads_visibilty === "False" ? "none" : "flex"
 
       const adHtml = await fetchAdApi('poll')
       adContainer.innerHTML = adHtml;
@@ -117,7 +131,7 @@ window.PollNamespace = window.PollNamespace || {};
       }
     }
 
-        const renderPollHeading = () => {
+        const renderPollHeading = (data) => {
         const headingContainer = document.createElement('div')
         headingContainer.classList.add('plugin-heading-text')
 
@@ -130,7 +144,7 @@ window.PollNamespace = window.PollNamespace || {};
         const titleAnimation = document.createElement('div');
         titleAnimation.classList.add('title-animation');
         const text = document.createElement('h2');
-        text.textContent = 'YM Poll';
+        text.textContent = data?.badge_text ? data?.badge_text : 'YM Poll';
         pluginName.appendChild(titleAnimation);
         pluginName.appendChild(text);
 
@@ -139,7 +153,7 @@ window.PollNamespace = window.PollNamespace || {};
 
         const headingText = document.createElement('div')
         headingText.classList.add('pull-section-heading-text')
-        headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><div class="sub-heading"><a href="">View T&amp;C</a></div>'
+        headingText.innerHTML = `<h3 class="summary-heading">${data?.header_title || ""}</h3><div class="sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
 
         const headingIcon = document.createElement('div')
         headingIcon.classList.add('section-heading-icon')
@@ -152,7 +166,13 @@ window.PollNamespace = window.PollNamespace || {};
         headingContainer.appendChild(pluginName);
         headingContainer.appendChild(headingContent);
 
-        return headingContainer;
+        if (data?.header_visibity) {
+          return headingContainer;
+        }
+        else {
+          pluginName.style.cssText = "top: 18.5px; margin-left: 20px; z-index: 1;"
+          return pluginName
+        }
       }
 
     const RenderPollResults = (pollResultArr) => {
@@ -201,6 +221,7 @@ window.PollNamespace = window.PollNamespace || {};
 
         const pollWidgetWrapperContent = document.createElement('div');
         pollWidgetWrapperContent.classList.add('poll-widget-wrapper-content');
+        pollWidgetWrapperContent.style.flexDirection = setAdAlignment(poll?.ads_alignment)
         pollWidgetWrapperContent.id = `data-poll-id-${bannerId}`
 
         const pollBox = document.createElement('div');
@@ -271,14 +292,14 @@ window.PollNamespace = window.PollNamespace || {};
         pollBox.appendChild(pollQuestion);
         pollBox.appendChild(radioContainer);
 
-        const adContent = await renderAdContent()
+        const adContent = await renderAdContent(poll)
 
         pollWidgetWrapperContent.appendChild(pollBox);
         pollWidgetWrapperContent.appendChild(adContent);
         
         pollWidgetWrapperHeader.appendChild(pollWidgetWrapperContent);
 
-        const headingContainer = renderPollHeading()
+        const headingContainer = renderPollHeading(poll)
 
         pollGameWrapper.appendChild(headingContainer);
         pollGameWrapper.appendChild(pollWidgetWrapperHeader);
@@ -328,6 +349,7 @@ const loadQuizGoogleFont = () => {
 // Load the CSS file
 loadQuizGoogleFont()
 loadQuizCSS('https://aleemescanor.github.io/poll-script/quiz-style.css'); // Replace with your hosted CSS file URL
+// loadQuizCSS('quiz-style.css'); // Replace with your hosted CSS file URL
 
 window.QuizNamespace = window.QuizNamespace || {};
 
@@ -384,16 +406,29 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
     }
   }
 
-  const renderAdContent = async () => {
+  const renderAdContent = async (quiz) => {
     const adContainer = document.createElement('div');
     adContainer.classList.add('ad-container');
+    adContainer.style.display = quiz?.ads_visibilty === "False" ? "none" : "flex";
 
     const adHtml = await fetchAdApi('quiz')
     adContainer.innerHTML = adHtml;
     return adContainer;
   }
 
-  const renderQuizHeading = () => {
+  const setAdAlignment = (align) => {
+    if (align === 'left') {
+      return "row-reverse"
+    }
+    else if (align === 'top') {
+      return 'column-reverse'
+    }
+    else if (align === 'bottom') {
+      return 'column'
+    }
+  }
+
+  const renderQuizHeading = (data) => {
     const headingContainer = document.createElement('div')
     headingContainer.classList.add('plugin-heading-text')
 
@@ -406,7 +441,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
     const titleAnimation = document.createElement('div');
     titleAnimation.classList.add('title-animation');
     const text = document.createElement('h2');
-    text.textContent = 'YM Quiz';
+    text.textContent = data?.badge_text ? data?.badge_text : 'YM Quiz';
     pluginName.appendChild(titleAnimation);
     pluginName.appendChild(text);
 
@@ -415,7 +450,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
     const headingText = document.createElement('div')
     headingText.classList.add('quiz-section-heading-text')
-    headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><div class="sub-heading"><a href="">View T&amp;C</a></div>'
+    headingText.innerHTML = `<h3 class="summary-heading">${data?.header_title || ""}</h3><div class="sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
 
     const headingIcon = document.createElement('div')
     headingIcon.classList.add('section-heading-icon')
@@ -428,7 +463,13 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
     headingContainer.appendChild(pluginName);
     headingContainer.appendChild(headingContent);
 
-    return headingContainer;
+    if (data?.header_visibity) {
+      return headingContainer;
+    }
+    else {
+      pluginName.style.cssText = "top: 18.5px; margin-left: 20px; z-index: 1;"
+      return pluginName
+    }
   }
 
   const RenderQuizBanner = async (bannerId, targetSelector) => {
@@ -465,6 +506,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
       const quizWidgetWrapperContent = document.createElement('div');
       quizWidgetWrapperContent.classList.add('quiz-widget-wrapper-content');
+      quizWidgetWrapperContent.style.flexDirection = setAdAlignment(quiz?.ads_alignment)
       quizWidgetWrapperContent.id = `data-quiz-id-${bannerId}-${TargetId}`
 
       const quizBox = document.createElement('div');
@@ -539,14 +581,14 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
       quizBox.appendChild(optionContainer);
       quizBox.appendChild(submitButton)
 
-      const adContent = await renderAdContent()
+      const adContent = await renderAdContent(quiz)
 
       quizWidgetWrapperContent.appendChild(quizBox);
       quizWidgetWrapperContent.appendChild(adContent);
       
       quizContentWrapper.appendChild(quizWidgetWrapperContent);
 
-      const headingContent = renderQuizHeading()
+      const headingContent = renderQuizHeading(quiz)
 
       quizContainerWidgets.appendChild(headingContent);
       quizContainerWidgets.appendChild(quizContentWrapper);
@@ -596,6 +638,7 @@ const loadSummaryGoogleFont = () => {
 // Load the CSS file
 loadSummaryGoogleFont()
 loadSummaryCSS('https://aleemescanor.github.io/poll-script/summary-style.css'); // Replace with your hosted CSS file URL
+// loadSummaryCSS('summary-style.css'); // Replace with your hosted CSS file URL
 
 window.SummaryNamespace = window.SummaryNamespace || {};
 
@@ -605,7 +648,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       const res = await fetch(`https://post-summary.yukta.one/api/summary/${id}`);
       const data = await res.json();
       if (data?.summary) {
-        return data.summary;
+        return data;
       } else if (data?.detail) {
         return data.detail;
       }
@@ -651,15 +694,28 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
     }
   }
 
+  const setAdAlignment = (align) => {
+    if (align === 'left') {
+      return "row-reverse"
+    }
+    else if (align === 'top') {
+      return 'column-reverse'
+    }
+    else if (align === 'bottom') {
+      return 'column'
+    }
+  }
+
   const handleClick = async (summaryId, summaryLength) => {
     await postClickSummary(summaryId, summaryLength)
   }
 
   const RenderSummaryBanner = async (bannerId, targetSelector = '#my-custom-container') => {
-    const summary = await fetchApi(bannerId);
+    const data = await fetchApi(bannerId);
+    const summary = data?.summary
     const adHtml = await fetchAdApi('summary');
 
-    const renderSummaryHeading = () => {
+    const renderSummaryHeading = (data) => {
       const headingContainer = document.createElement('div')
       headingContainer.classList.add('summary-plugin-heading-text')
 
@@ -672,7 +728,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       const titleAnimation = document.createElement('div');
       titleAnimation.classList.add('title-animation');
       const text = document.createElement('h2');
-      text.textContent = 'YM Summary';
+      text.textContent = data?.badge_text ? data?.badge_text : 'YM Summary';
       pluginName.appendChild(titleAnimation);
       pluginName.appendChild(text);
 
@@ -681,7 +737,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
 
       const headingText = document.createElement('div')
       headingText.classList.add('summary-section-heading-text')
-      headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><div class="sub-heading"><a href="">View T&amp;C</a></div>'
+      headingText.innerHTML = `<h3 class="summary-heading">${data?.header_title || ""}</h3><div class="sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
 
       const headingIcon = document.createElement('div')
       headingIcon.classList.add('summary-section-heading-icon')
@@ -694,7 +750,13 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       headingContainer.appendChild(pluginName);
       headingContainer.appendChild(headingContent);
 
-      return headingContainer;
+      if (data?.header_visibity) {
+        return headingContainer;
+      }
+      else {
+        pluginName.style.cssText = "top: 18.5px; margin-left: 20px; z-index: 1;"
+        return pluginName
+      }
     }
 
     if (summary && adHtml) {
@@ -709,6 +771,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
 
       const pluginData = document.createElement('div');
       pluginData.classList.add('summary-widget-wrapper-content');
+      pluginData.style.flexDirection = setAdAlignment(data?.ads_alignment)
 
       const summaryContentBlock = document.createElement('div');
       summaryContentBlock.classList.add('summary-content-block');
@@ -716,6 +779,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       // For ad
       const AdContent = document.createElement('div');
       AdContent.classList.add('ad-content');
+      AdContent.style.display = data?.ads_visibilty === "False" ? 'none' : 'flex';
       AdContent.innerHTML = adHtml;
 
       // Radio buttons
@@ -773,7 +837,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
 
       summaryContentWrapper.appendChild(pluginData);
 
-      const headingContainer = renderSummaryHeading();
+      const headingContainer = renderSummaryHeading(data);
       summaryContainer.appendChild(headingContainer);
       summaryContainer.appendChild(summaryContentWrapper);
 

@@ -86,7 +86,7 @@ h3 {
 }
 
 .poll-box {
-    flex: 2;
+    flex: 1;
     border-radius: 5px;
     box-sizing: border-box;
     font-family: inherit;
