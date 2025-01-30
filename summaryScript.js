@@ -68,7 +68,7 @@ const loadSummaryCSS = (cssUrl) => {
         headingContainer.classList.add('plugin-heading-text')
 
         const headingBG = document.createElement('div')
-        headingBG.classList.add('pull-heading-bg')  //pull is not a typo, I am trying to match the class names as per the css
+        headingBG.classList.add('summary-heading-bg')  //pull is not a typo, I am trying to match the class names as per the css
 
         const pluginName = document.createElement('div');
         pluginName.classList.add('pull-plugin-name');

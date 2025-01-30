@@ -79,6 +79,12 @@ h3 {
     gap: 36px;
 }
 
+@media screen and (max-width: 991px) {
+    .poll-widget-wrapper-content {
+        flex-direction: column;
+    }
+}
+
 .poll-box {
     flex: 2;
     border-radius: 5px;

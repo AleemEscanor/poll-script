@@ -26,7 +26,7 @@ const loadGoogleFont = () => {
 
 // Load the CSS file
 loadGoogleFont()
-loadCSS('https://shefaligoyal17.github.io/poll-script/poll-style.css'); // Replace with your hosted CSS file URL
+loadCSS('https://aleemescanor.github.io/poll-script/poll-style.css'); // Replace with your hosted CSS file URL
 
 
 window.PollNamespace = window.PollNamespace || {};
@@ -327,7 +327,7 @@ const loadQuizGoogleFont = () => {
 
 // Load the CSS file
 loadQuizGoogleFont()
-loadQuizCSS('https://shefaligoyal17.github.io/quiz-script/quiz-style.css'); // Replace with your hosted CSS file URL
+loadQuizCSS('https://aleemescanor.github.io/poll-script/quiz-style.css'); // Replace with your hosted CSS file URL
 
 window.QuizNamespace = window.QuizNamespace || {};
 
@@ -398,10 +398,10 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
     headingContainer.classList.add('plugin-heading-text')
 
     const headingBG = document.createElement('div')
-    headingBG.classList.add('pull-heading-bg')  //pull is not a typo, I am trying to match the class names as per the css
+    headingBG.classList.add('quiz-heading-bg')  //quiz is not a typo, I am trying to match the class names as per the css
 
     const pluginName = document.createElement('div');
-    pluginName.classList.add('pull-plugin-name');
+    pluginName.classList.add('quiz-plugin-name');
 
     const titleAnimation = document.createElement('div');
     titleAnimation.classList.add('title-animation');
@@ -414,7 +414,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
     headingContent.classList.add('section-heading')
 
     const headingText = document.createElement('div')
-    headingText.classList.add('pull-section-heading-text')
+    headingText.classList.add('quiz-section-heading-text')
     headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><div class="sub-heading"><a href="">View T&amp;C</a></div>'
 
     const headingIcon = document.createElement('div')
@@ -628,19 +628,46 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
     }
   };
 
+  const postClickSummary = async (summaryId, summaryLength) => {
+    try {
+      const res = await fetch("https://post-summary.yukta.one/click_summary", 
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            summary_id: summaryId,
+            summary_length: summaryLength,
+          }),
+        }
+      )
+      const resStatus = await res.json()
+      if (resStatus.success) {
+        console.log('Summary click logged successfully')
+      }
+    } catch (error) {
+      console.error('Failed to log summary click', error)
+    }
+  }
+
+  const handleClick = async (summaryId, summaryLength) => {
+    await postClickSummary(summaryId, summaryLength)
+  }
+
   const RenderSummaryBanner = async (bannerId, targetSelector = '#my-custom-container') => {
     const summary = await fetchApi(bannerId);
     const adHtml = await fetchAdApi('summary');
 
     const renderSummaryHeading = () => {
       const headingContainer = document.createElement('div')
-      headingContainer.classList.add('plugin-heading-text')
+      headingContainer.classList.add('summary-plugin-heading-text')
 
       const headingBG = document.createElement('div')
-      headingBG.classList.add('pull-heading-bg')  //pull is not a typo, I am trying to match the class names as per the css
+      headingBG.classList.add('summary-heading-bg')  //summary is not a typo, I am trying to match the class names as per the css
 
       const pluginName = document.createElement('div');
-      pluginName.classList.add('pull-plugin-name');
+      pluginName.classList.add('summary-plugin-name');
 
       const titleAnimation = document.createElement('div');
       titleAnimation.classList.add('title-animation');
@@ -650,14 +677,14 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       pluginName.appendChild(text);
 
       const headingContent = document.createElement('div')
-      headingContent.classList.add('section-heading')
+      headingContent.classList.add('summary-section-heading')
 
       const headingText = document.createElement('div')
-      headingText.classList.add('pull-section-heading-text')
+      headingText.classList.add('summary-section-heading-text')
       headingText.innerHTML = '<h3 class="summary-heading">Gift and Voucher for Premium Customers</h3><div class="sub-heading"><a href="">View T&amp;C</a></div>'
 
       const headingIcon = document.createElement('div')
-      headingIcon.classList.add('section-heading-icon')
+      headingIcon.classList.add('summary-section-heading-icon')
       headingIcon.innerHTML = '<img alt="#" data-src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif">'
 
       headingContent.appendChild(headingText)
@@ -681,7 +708,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       summaryContentWrapper.id = `banner-${bannerId}-${targetSelector.replace('#', '')}`;
 
       const pluginData = document.createElement('div');
-      pluginData.classList.add('plugin-data');
+      pluginData.classList.add('summary-widget-wrapper-content');
 
       const summaryContentBlock = document.createElement('div');
       summaryContentBlock.classList.add('summary-content-block');
@@ -723,10 +750,12 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       labelMedium.textContent = 'Medium';
       labelMedium.appendChild(radioMedium);
 
+
       const labelShort = document.createElement('label');
       labelShort.setAttribute('for', `short-${bannerId}-${targetSelector.replace('#', '')}`);
       labelShort.textContent = 'Short';
       labelShort.appendChild(radioShort);
+
 
       radioContainer.appendChild(labelShort);
       radioContainer.appendChild(labelMedium);
@@ -758,14 +787,17 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
 
       radioLong.addEventListener('change', () => {
         contentDiv.innerHTML = `<p>${summary.long}</p>`;
-      });
+        handleClick(bannerId, 'long')
+    });
 
       radioMedium.addEventListener('change', () => {
         contentDiv.innerHTML = `<p>${summary.medium}</p>`;
+        handleClick(bannerId, 'medium')
       });
 
       radioShort.addEventListener('change', () => {
         contentDiv.innerHTML = `<p>${summary.short}</p>`;
+        handleClick(bannerId,'short')
       });
     } else {
       console.error('No summary or detail available.');
