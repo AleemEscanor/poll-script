@@ -1,3 +1,8 @@
+// const APIURL = "http://127.0.0.1:5005";  // api endpoint
+const APIURL = "https://post-summary.yukta.one" // api endpoint
+const scriptUrl = "https://aleemescanor.github.io/poll-script"  //url where script is hosted
+
+
 // Function to dynamically load a CSS file
 const loadCSS = (cssUrl) => {
   const link = document.createElement('link');
@@ -26,7 +31,7 @@ const loadGoogleFont = () => {
 
 // Load the CSS file
 loadGoogleFont()
-loadCSS('https://aleemescanor.github.io/poll-script/poll-style.css'); // Replace with your hosted CSS file URL
+loadCSS(`${scriptUrl}/poll-style.css`); // Replace with your hosted CSS file URL
 // loadCSS('poll-style.css'); // Replace with your hosted CSS file URL
 
 
@@ -35,7 +40,7 @@ window.PollNamespace = window.PollNamespace || {};
   window.PollNamespace.GetPollBanner = (id, targetSelector = '#my-custom-container') => {
     const fetchApi = async (id) => {
       try {
-        const res = await fetch(`https://post-summary.yukta.one/get_poll/${id}`);
+        const res = await fetch(`${APIURL}/get_poll/${id}`);
         const data = await res.json();
         if (data?.question) {
           return data;
@@ -50,7 +55,7 @@ window.PollNamespace = window.PollNamespace || {};
 
       const fetchAdApi = async (type) => {
       try {
-        const res = await fetch(`https://post-summary.yukta.one/api/ad?type=${type}`);
+        const res = await fetch(`${APIURL}/api/ad?type=${type}`);
         const data = await res.json();
         if (data?.ad_html) {
           return data.ad_html;
@@ -78,7 +83,7 @@ window.PollNamespace = window.PollNamespace || {};
         if (!pollId || !ques || !userAnswer) {
           return null;
         }
-        const res = await fetch(`https://post-summary.yukta.one/submit_poll`, {
+        const res = await fetch(`${APIURL}/submit_poll`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -112,7 +117,7 @@ window.PollNamespace = window.PollNamespace || {};
         if (!pollId || !ques) {
           return null;
         }
-        const res = await fetch(`https://post-summary.yukta.one/get_poll_results`, {
+        const res = await fetch(`${APIURL}/get_poll_results`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -348,7 +353,7 @@ const loadQuizGoogleFont = () => {
 
 // Load the CSS file
 loadQuizGoogleFont()
-loadQuizCSS('https://aleemescanor.github.io/poll-script/quiz-style.css'); // Replace with your hosted CSS file URL
+loadQuizCSS(`${scriptUrl}/quiz-style.css`); // Replace with your hosted CSS file URL
 // loadQuizCSS('quiz-style.css'); // Replace with your hosted CSS file URL
 
 window.QuizNamespace = window.QuizNamespace || {};
@@ -356,7 +361,7 @@ window.QuizNamespace = window.QuizNamespace || {};
 window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container') => {
   const fetchApi = async (id) => {
     try {
-      const res = await fetch(`https://post-summary.yukta.one/api/quiz/${id}`);
+      const res = await fetch(`${APIURL}/api/quiz/${id}`);
       const data = await res.json();
       if (data?.quiz?.length > 0) {
         return data?.quiz[0];
@@ -374,7 +379,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
       if (!quizId || !userAnswer) {
         return null;
       }
-      const res = await fetch(`https://post-summary.yukta.one/submit_quiz`, {
+      const res = await fetch(`${APIURL}/submit_quiz`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -395,7 +400,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
   const fetchAdApi = async (type) => {
     try {
-      const res = await fetch(`https://post-summary.yukta.one/api/ad?type=${type}`);
+      const res = await fetch(`${APIURL}/api/ad?type=${type}`);
       const data = await res.json();
       if (data?.ad_html) {
         return data.ad_html;
@@ -637,7 +642,7 @@ const loadSummaryGoogleFont = () => {
 
 // Load the CSS file
 loadSummaryGoogleFont()
-loadSummaryCSS('https://aleemescanor.github.io/poll-script/summary-style.css'); // Replace with your hosted CSS file URL
+loadSummaryCSS(`${scriptUrl}/summary-style.css`); // Replace with your hosted CSS file URL
 // loadSummaryCSS('summary-style.css'); // Replace with your hosted CSS file URL
 
 window.SummaryNamespace = window.SummaryNamespace || {};
@@ -645,7 +650,7 @@ window.SummaryNamespace = window.SummaryNamespace || {};
 window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
   const fetchApi = async (id) => {
     try {
-      const res = await fetch(`https://post-summary.yukta.one/api/summary/${id}`);
+      const res = await fetch(`${APIURL}/api/summary/${id}`);
       const data = await res.json();
       if (data?.summary) {
         return data;
@@ -660,7 +665,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
 
   const fetchAdApi = async (type) => {
     try {
-      const res = await fetch(`https://post-summary.yukta.one/api/ad?type=${type}`);
+      const res = await fetch(`${APIURL}/api/ad?type=${type}`);
       const data = await res.json();
       if (data?.ad_html) {
         return data.ad_html;
@@ -673,7 +678,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
 
   const postClickSummary = async (summaryId, summaryLength) => {
     try {
-      const res = await fetch("https://post-summary.yukta.one/click_summary", 
+      const res = await fetch(`${APIURL}/click_summary`, 
         {
           method: "POST",
           headers: {
@@ -762,7 +767,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
     if (summary && adHtml) {
       // The parent container
       const summaryContainer = document.createElement('div');
-      summaryContainer.classList.add('summary-container');
+      summaryContainer.classList.add('summary-container-widgets');
 
       // Create the banner container
       const summaryContentWrapper = document.createElement('div');

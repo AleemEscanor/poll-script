@@ -18,9 +18,9 @@ h3 {
     overflow: hidden;
     position: relative;
     max-width: 1000px;
+    width: fit-content;
     font-family: inherit;
     margin-top: 24px !important;
-    width: 100%;
     margin: 20px auto;
     align-items: center;
 }
