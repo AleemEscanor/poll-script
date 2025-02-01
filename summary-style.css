@@ -1,25 +1,21 @@
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    line-height: 19px;
-}
-
  /* ---------------Top Parent Styling--------------- */
 
 .summary-container-widgets {
     color: #000000;
     font-size: 16px;
-    font-family: inherit !important;
+    font-family: inherit ;
     position: relative;
     max-width: 1000px;
     margin: 16px auto;
     clear: both;
-    margin-top: 24px !important;
+    margin-top: 24px ;
     overflow: hidden;
     padding: 0px;
+
+    /* ---------------Global font styles Styling--------------- */
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 19px;
 }
 
 
@@ -35,15 +31,15 @@
     position: relative;
     z-index: 10;
     width: 100%;
-    margin-bottom: 0px !important;
+    margin-bottom: 0px ;
     box-sizing: border-box;
     border-bottom-style: dashed;
     border-bottom-width: 1px;
     border-bottom-color: #000000;
-    padding-top: 0px !important;
-    padding-right: 10px !important;
-    padding-bottom: 8px !important;
-    padding-left: 20px !important;
+    padding-top: 0px ;
+    padding-right: 10px ;
+    padding-bottom: 8px ;
+    padding-left: 20px ;
 }
 
 .summary-heading-bg {
@@ -85,7 +81,7 @@
     overflow: hidden;
 }
 
-.title-animation {
+.summary-title-animation {
     position: absolute;
     z-index: 10;
     width: 25%;
@@ -101,13 +97,13 @@
 
 .summary-plugin-name h2 {
     color: #ffffff;
-    font-size: 16px !important;
+    font-size: 16px ;
     font-family: inherit;
-    margin: 0px !important;
+    margin: 0px ;
 }
 
 .summary-section-heading {
-    padding-top: 10px !important;
+    padding-top: 10px ;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,15 +118,15 @@
 .summary-section-heading-text h3 {
     font-family: inherit;
     color: #ffffff;
-    font-size: 20px !important;
-    margin: 0px !important;
+    font-size: 20px ;
+    margin: 0px ;
 }
 
-.sub-heading a {
-    font-size: 14px !important;
+.summary-sub-heading a {
+    font-size: 14px ;
     color: #ffffff;
-    margin: 0px !important;
-    text-decoration: none !important;
+    margin: 0px ;
+    text-decoration: none ;
 }
 
 .summary-section-heading-icon img {
@@ -139,7 +135,7 @@
     object-fit: cover;
     max-width: 70px;
     max-height: 70px;
-    margin: 0px !important;
+    margin: 0px ;
 }
 .lazyloaded {
     opacity: 1;
@@ -172,15 +168,15 @@ img {
 
 .summary-content-wrapper::before {
     content: '';
-    background: #fff !important;
-    position: absolute !important;
-    left: -12px !important;
-    top: -13px !important;
-    z-index: 30 !important;
-    rotate: 135deg !important;
-    padding: 12px 12px !important;
-    width: auto !important;
-    height: auto !important;
+    background: #fff ;
+    position: absolute ;
+    left: -12px ;
+    top: -13px ;
+    z-index: 30 ;
+    rotate: 135deg ;
+    padding: 12px 12px ;
+    width: auto ;
+    height: auto ;
 }
 
 .summary-content-wrapper::after {
@@ -249,12 +245,12 @@ img {
 
  /* ---------------Advertisement Styling--------------- */
 
-.ad-content {
+.summary-ad-content {
     display: flex;
     align-items: center;
 }
 
-.ad-content {
+.summary-ad-content {
     background-color: #fff;
     text-align: center;
     justify-content: center;
@@ -264,7 +260,7 @@ img {
 }
 
 @media screen and (max-width: 767px) {
-    .ad-content {
+    .summary-ad-content {
         max-width: 100%;
     }
 }
