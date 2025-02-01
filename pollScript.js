@@ -2,6 +2,8 @@
 const APIURL = "https://post-summary.yukta.one" // api endpoint
 const scriptUrl = "https://aleemescanor.github.io/poll-script"  //url where script is hosted
 
+const assetsUrl = "https://aleemescanor.github.io/poll-script/assets/img"  //where assets such as images are stored
+
 
 // Function to dynamically load a CSS file
 const loadCSS = (cssUrl) => {
@@ -104,7 +106,7 @@ window.PollNamespace = window.PollNamespace || {};
 
     const renderAdContent = async (poll) => {
       const adContainer = document.createElement('div');
-      adContainer.classList.add('ad-container');
+      adContainer.classList.add('poll-ad-container');
       adContainer.style.display = poll?.ads_visibilty === "False" ? "none" : "flex"
 
       const adHtml = await fetchAdApi('poll')
@@ -138,7 +140,7 @@ window.PollNamespace = window.PollNamespace || {};
 
         const renderPollHeading = (data) => {
         const headingContainer = document.createElement('div')
-        headingContainer.classList.add('plugin-heading-text')
+        headingContainer.classList.add('poll-plugin-heading-text')
 
         const headingBG = document.createElement('div')
         headingBG.classList.add('pull-heading-bg')  //pull is not a typo, I am trying to match the class names as per the css
@@ -147,22 +149,22 @@ window.PollNamespace = window.PollNamespace || {};
         pluginName.classList.add('pull-plugin-name');
 
         const titleAnimation = document.createElement('div');
-        titleAnimation.classList.add('title-animation');
+        titleAnimation.classList.add('poll-title-animation');
         const text = document.createElement('h2');
         text.textContent = data?.badge_text ? data?.badge_text : 'YM Poll';
         pluginName.appendChild(titleAnimation);
         pluginName.appendChild(text);
 
         const headingContent = document.createElement('div')
-        headingContent.classList.add('section-heading')
+        headingContent.classList.add('poll-section-heading')
 
         const headingText = document.createElement('div')
         headingText.classList.add('pull-section-heading-text')
-        headingText.innerHTML = `<h3 class="summary-heading">${data?.header_title || ""}</h3><div class="sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
+        headingText.innerHTML = `<h3 class="poll-heading">${data?.header_title || ""}</h3><div class="poll-sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
 
         const headingIcon = document.createElement('div')
-        headingIcon.classList.add('section-heading-icon')
-        headingIcon.innerHTML = '<img alt="#" data-src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif">'
+        headingIcon.classList.add('poll-section-heading-icon')
+        headingIcon.innerHTML = `<img alt="#" data-src="${assetsUrl}/Untitled-1.gif" class=" lazyloaded" src="${assetsUrl}/Untitled-1.gif">`
 
         headingContent.appendChild(headingText)
         headingContent.appendChild(headingIcon)
@@ -413,7 +415,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
   const renderAdContent = async (quiz) => {
     const adContainer = document.createElement('div');
-    adContainer.classList.add('ad-container');
+    adContainer.classList.add('quiz-ad-container');
     adContainer.style.display = quiz?.ads_visibilty === "False" ? "none" : "flex";
 
     const adHtml = await fetchAdApi('quiz')
@@ -435,7 +437,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
   const renderQuizHeading = (data) => {
     const headingContainer = document.createElement('div')
-    headingContainer.classList.add('plugin-heading-text')
+    headingContainer.classList.add('quiz-plugin-heading-text')
 
     const headingBG = document.createElement('div')
     headingBG.classList.add('quiz-heading-bg')  //quiz is not a typo, I am trying to match the class names as per the css
@@ -444,22 +446,22 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
     pluginName.classList.add('quiz-plugin-name');
 
     const titleAnimation = document.createElement('div');
-    titleAnimation.classList.add('title-animation');
+    titleAnimation.classList.add('quiz-title-animation');
     const text = document.createElement('h2');
     text.textContent = data?.badge_text ? data?.badge_text : 'YM Quiz';
     pluginName.appendChild(titleAnimation);
     pluginName.appendChild(text);
 
     const headingContent = document.createElement('div')
-    headingContent.classList.add('section-heading')
+    headingContent.classList.add('quiz-section-heading')
 
     const headingText = document.createElement('div')
     headingText.classList.add('quiz-section-heading-text')
-    headingText.innerHTML = `<h3 class="summary-heading">${data?.header_title || ""}</h3><div class="sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
+    headingText.innerHTML = `<h3 class="quiz-heading">${data?.header_title || ""}</h3><div class="quiz-sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
 
     const headingIcon = document.createElement('div')
-    headingIcon.classList.add('section-heading-icon')
-    headingIcon.innerHTML = '<img alt="#" data-src="https://raw.githubusercontent.com/shefaligoyal17/quiz-script/refs/heads/main/assets/img/Sun.gif" class=" lazyloaded" src="https://raw.githubusercontent.com/shefaligoyal17/quiz-script/refs/heads/main/assets/img/Sun.gif">'
+    headingIcon.classList.add('quiz-section-heading-icon')
+    headingIcon.innerHTML = `<img alt="#" data-src="${assetsUrl}/Sun.gif" class=" lazyloaded" src="${assetsUrl}/Sun.gif">`
 
     headingContent.appendChild(headingText)
     headingContent.appendChild(headingIcon)
@@ -519,7 +521,7 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
 
       //Question
       const quizQuestion = document.createElement('div');
-      quizQuestion.classList.add('question');
+      quizQuestion.classList.add('quiz-question');
       quizQuestion.textContent = quiz.question;
 
       // Button Container
@@ -559,17 +561,17 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
           if (correctOption === selectedOption) {
             selectedOptionElement.style.backgroundColor = '#9feb8e';
             selectedOptionElement.style.color = '#000000';
-            selectedOptionElement.innerHTML = `${selectedOption}<span class="list-icon1"><img src="https://raw.githubusercontent.com/shefaligoyal17/quiz-script/bf354b81846122f19438cb627b1af0bd44e37414/assets/img/tick.svg" alt="tick" /></span>`
+            selectedOptionElement.innerHTML = `${selectedOption}<span class="list-icon1"><img src="${assetsUrl}/tick.svg" alt="tick" /></span>`
           }
           else {
             selectedOptionElement.style.backgroundColor ='#fca7a1';
             selectedOptionElement.style.color = '#000000';
-            selectedOptionElement.innerHTML = `${selectedOption}<span class="list-icon1"><img src="https://raw.githubusercontent.com/shefaligoyal17/quiz-script/bf354b81846122f19438cb627b1af0bd44e37414/assets/img/cross.svg" alt="tick" /></span>`
+            selectedOptionElement.innerHTML = `${selectedOption}<span class="list-icon1"><img src="${assetsUrl}/cross.svg" alt="tick" /></span>`
             const correctOptionElement = document.getElementById(`option-${quiz.options.indexOf(correctOption)}-${bannerId}-${TargetId}`);
             correctOptionElement.style.backgroundColor = '#9feb8e';
             correctOptionElement.style.color = '#000000';
             correctOptionElement.style.borderColor = 'transparent';
-            correctOptionElement.innerHTML = `${correctOption}<span class="list-icon1"><img src="https://raw.githubusercontent.com/shefaligoyal17/quiz-script/bf354b81846122f19438cb627b1af0bd44e37414/assets/img/tick.svg" alt="tick" /></span>`
+            correctOptionElement.innerHTML = `${correctOption}<span class="list-icon1"><img src="${assetsUrl}/tick.svg" alt="tick" /></span>`
           }
 
           //remove event listener from all options
@@ -731,7 +733,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
       pluginName.classList.add('summary-plugin-name');
 
       const titleAnimation = document.createElement('div');
-      titleAnimation.classList.add('title-animation');
+      titleAnimation.classList.add('summary-title-animation');
       const text = document.createElement('h2');
       text.textContent = data?.badge_text ? data?.badge_text : 'YM Summary';
       pluginName.appendChild(titleAnimation);
@@ -742,11 +744,11 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
 
       const headingText = document.createElement('div')
       headingText.classList.add('summary-section-heading-text')
-      headingText.innerHTML = `<h3 class="summary-heading">${data?.header_title || ""}</h3><div class="sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
+      headingText.innerHTML = `<h3 class="summary-heading">${data?.header_title || ""}</h3><div class="summary-sub-heading"><a href=${data?.click_through_url_link || ""}>${data?.click_through_url_text || ""}</a></div>`
 
       const headingIcon = document.createElement('div')
       headingIcon.classList.add('summary-section-heading-icon')
-      headingIcon.innerHTML = '<img alt="#" data-src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif" class=" lazyloaded" src="https://raw.githubusercontent.com/shefaligoyal17/poll-script/refs/heads/main/assets/img/Untitled-1.gif">'
+      headingIcon.innerHTML = `<img alt="#" data-src="${assetsUrl}/Untitled-1.gif" class=" lazyloaded" src="${assetsUrl}/Untitled-1.gif">`
 
       headingContent.appendChild(headingText)
       headingContent.appendChild(headingIcon)
@@ -783,7 +785,7 @@ window.SummaryNamespace.GetSummaryBanner = (id, targetSelector) => {
 
       // For ad
       const AdContent = document.createElement('div');
-      AdContent.classList.add('ad-content');
+      AdContent.classList.add('summary-ad-content');
       AdContent.style.display = data?.ads_visibilty === "False" ? 'none' : 'flex';
       AdContent.innerHTML = adHtml;
 
