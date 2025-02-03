@@ -15,7 +15,7 @@
     /* ---------------Global font styles Styling--------------- */
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
-    line-height: 19px;
+    line-height: 19px;     /* If  you want to overwrite font-size, then make sure to overwrite line-height as per your need */
 }
 
  /* ---------------Heading Styling--------------- */
