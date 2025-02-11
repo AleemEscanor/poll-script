@@ -40,12 +40,57 @@ loadCSS(`${scriptUrl}/poll-style.css`); // Replace with your hosted CSS file URL
 window.PollNamespace = window.PollNamespace || {};
 
   window.PollNamespace.GetPollBanner = (id, targetSelector = '#my-custom-container') => {
+    // Check if page is refreshed or navigated (sessionStorage is cleared on page reload or navigation)
+    const type = performance.getEntriesByType('navigation')[0].type
+    if (type === 'navigate' || type === 'reload' || type === 'back_forward') {
+      sessionStorage.clear(); // Clear session storage on page reload
+    }
+
+    const getUniqueQues = (pollArr) => {
+      let uniqueQues;
+      
+      //Match the question from session storage questions to get the unique ques
+      for (let i = 0; i < pollArr.length; i++) {
+        const poll = pollArr[i];
+        const isDuplicate = checkDuplicateData(poll.question);
+
+        if (!isDuplicate) {
+          uniqueQues = poll;  // Add the poll to the array if it's not a duplicate
+          break;  // Stop the loop once the first valid poll is found
+        }
+      }
+      
+      return uniqueQues;
+    }
+
+
+    const checkDuplicateData = (ques) => {
+      const sessionData = window.sessionStorage.getItem('poll-question')
+
+      if (sessionData) {
+        const savedData = JSON.parse(sessionData)
+        if (savedData.includes(ques)) {
+          return true
+        }
+        else {
+          savedData.push(ques)
+          window.sessionStorage.setItem('poll-question', JSON.stringify(savedData))
+          return false
+        }
+      }
+      else {
+        window.sessionStorage.setItem('poll-question', JSON.stringify([ques]))
+        return false
+      }
+    }
+
     const fetchApi = async (id) => {
       try {
-        const res = await fetch(`${APIURL}/get_poll/${id}`);
+        const res = await fetch(`${APIURL}/v2/get_poll/${id}`);
         const data = await res.json();
-        if (data?.question) {
-          return data;
+        if (data?.poll?.length > 0) {
+          const uniqueQues = getUniqueQues(data?.poll)
+          return uniqueQues
         } else if (data?.detail) {
           return data.detail;
         }
@@ -287,7 +332,6 @@ window.PollNamespace = window.PollNamespace || {};
             const pollResults = await getPollResults(bannerId, poll.question);
             const pollResultElement = RenderPollResults(pollResults)
             pollBox.appendChild(pollResultElement)
-            console.log('pollresults',pollResults)
           } else {
             console.log('Failed to submit response. Please try again.');
           }
@@ -320,7 +364,7 @@ window.PollNamespace = window.PollNamespace || {};
         }
         
       } else {
-        console.error('No summary or detail available.');
+        console.error('No unique Poll or detail available.');
       }
     };
     
@@ -361,12 +405,57 @@ loadQuizCSS(`${scriptUrl}/quiz-style.css`); // Replace with your hosted CSS file
 window.QuizNamespace = window.QuizNamespace || {};
 
 window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container') => {
+  // Check if page is refreshed or navigated (sessionStorage is cleared on page reload or navigation)
+  const type = performance.getEntriesByType('navigation')[0].type
+  if (type === 'navigate' || type === 'reload' || type === 'back_forward') {
+    sessionStorage.clear(); // Clear session storage on page reload
+  }
+
+  const getUniqueQues = (quizArr) => {
+    let uniqueQues;
+    
+    //Match the question from session storage questions to get the unique ques
+    for (let i = 0; i < quizArr.length; i++) {
+      const poll = quizArr[i];
+      const isDuplicate = checkDuplicateData(poll.question);
+
+      if (!isDuplicate) {
+        uniqueQues = poll;  // Add the poll to the array if it's not a duplicate
+        break;  // Stop the loop once the first valid poll is found
+      }
+    }
+    
+    return uniqueQues;
+  }
+
+
+  const checkDuplicateData = (ques) => {
+    const sessionData = window.sessionStorage.getItem('quiz-question')
+
+    if (sessionData) {
+      const savedData = JSON.parse(sessionData)
+      if (savedData.includes(ques)) {
+        return true
+      }
+      else {
+        savedData.push(ques)
+        window.sessionStorage.setItem('quiz-question', JSON.stringify(savedData))
+        return false
+      }
+    }
+    else {
+      window.sessionStorage.setItem('quiz-question', JSON.stringify([ques]))
+      return false
+    }
+  }
+
   const fetchApi = async (id) => {
     try {
-      const res = await fetch(`${APIURL}/api/quiz/${id}`);
+      const res = await fetch(`${APIURL}/v2/get_quiz/${id}`);
       const data = await res.json();
       if (data?.quiz?.length > 0) {
-        return data?.quiz[0];
+        const uniqueQues = getUniqueQues(data?.quiz)
+        return uniqueQues
       } else if (data?.detail) {
         return data.detail;
       }
