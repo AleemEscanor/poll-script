@@ -360,7 +360,6 @@ window.PollNamespace = window.PollNamespace || {};
           targetElement.appendChild(pollGameWrapper);
         } else {
           console.error(`Target element "${targetSelector}" not found. Appending to body instead.`);
-          document.body.appendChild(pollGameWrapper);
         }
         
       } else {
@@ -694,7 +693,6 @@ window.QuizNamespace.GetQuizBanner = (id, targetSelector = '#my-custom-container
         targetElement.appendChild(quizContainerWidgets);
       } else {
         console.error(`Target element "${targetSelector}" not found. Appending to body instead.`);
-        document.body.appendChild(quizContainerWidgets);
       }
 
     } else {
